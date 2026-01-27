@@ -28860,3 +28860,25 @@
 2026-01-23 17:28:33,392 :INFO :******** Click the Save Changes Button********
 2026-01-23 17:28:33,416 :INFO :******** Close the Browser********
 2026-01-23 17:28:33,528 :INFO :**********MakeUp VCBCs Creation Test is Successful********
+2026-01-27 13:29:16,558 :INFO :====== WebDriver manager ======
+2026-01-27 13:29:16,703 :INFO :Get LATEST chromedriver version for google-chrome
+2026-01-27 13:29:16,834 :INFO :Get LATEST chromedriver version for google-chrome
+2026-01-27 13:29:16,945 :INFO :Driver [/Users/oluwasegunojeyinka/.wdm/drivers/chromedriver/mac64/144.0.7559.96/chromedriver-mac-arm64/chromedriver] found in cache
+2026-01-27 13:36:00,349 :INFO :====== WebDriver manager ======
+2026-01-27 13:36:00,483 :INFO :Get LATEST chromedriver version for google-chrome
+2026-01-27 13:36:00,613 :INFO :Get LATEST chromedriver version for google-chrome
+2026-01-27 13:36:00,728 :INFO :Driver [/Users/oluwasegunojeyinka/.wdm/drivers/chromedriver/mac64/144.0.7559.96/chromedriver-mac-arm64/chromedriver] found in cache
+2026-01-27 13:37:47,803 :INFO :====== WebDriver manager ======
+2026-01-27 13:37:47,943 :INFO :Get LATEST chromedriver version for google-chrome
+2026-01-27 13:37:48,066 :INFO :Get LATEST chromedriver version for google-chrome
+2026-01-27 13:37:48,174 :INFO :Driver [/Users/oluwasegunojeyinka/.wdm/drivers/chromedriver/mac64/144.0.7559.96/chromedriver-mac-arm64/chromedriver] found in cache
+2026-01-27 13:42:57,678 :INFO :====== WebDriver manager ======
+2026-01-27 13:42:57,810 :INFO :Get LATEST chromedriver version for google-chrome
+2026-01-27 13:42:57,925 :INFO :Get LATEST chromedriver version for google-chrome
+2026-01-27 13:42:58,037 :INFO :Driver [/Users/oluwasegunojeyinka/.wdm/drivers/chromedriver/mac64/144.0.7559.96/chromedriver-mac-arm64/chromedriver] found in cache
+2026-01-27 13:42:58,833 :INFO :****** Starting login ******
+2026-01-27 13:43:00,429 :INFO :******** Click the Home Button ********
+2026-01-27 13:43:03,234 :INFO :****** Login successful ******
+2026-01-27 13:43:03,234 :INFO :******** Login Test is successful ********
+2026-01-27 13:43:03,236 :INFO :******** Assert Page Title ********
+2026-01-27 13:43:03,355 :INFO :Login Test is successful and assertion passed
