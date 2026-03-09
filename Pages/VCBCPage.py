@@ -389,7 +389,7 @@ class VCBCPage:
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//body[1]/div[2]/div[1]/div[2]/div[2]/div[1]/ul[1]/li[3]/a[1]/div[1]/div[1]"))).click()
 
     def learnerSchedule(self):
-        WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@hx-get='/vcbc/30/schedule']"))).click()
+        WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@hx-get='/vcbc/31/schedule']"))).click()
 
     def learnerReSchedule(self):
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@hx-get='/vcbc/40/schedule?old_slot=3675']"))).click()
