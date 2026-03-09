@@ -1,0 +1,85 @@
+name: ELPortal Allure Reports
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+permissions:
+  contents: write
+
+jobs:
+  selenium-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15  # Adjust as needed
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-html allure-pytest
+
+      - name: Install Chrome Driver
+        run: |
+          wget https://chromedriver.storage.googleapis.com/$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+
+      - name: Set Chrome binary path (Important for headless mode)
+        run: |
+          mkdir -p /opt/google/chrome
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome-stable_current_amd64.deb
+          rm google-chrome-stable_current_amd64.deb
+          sudo apt-get install -y --fix-broken
+          sudo apt-get install -y xvfb
+
+      - name: Install Allure CLI
+        run: |
+          wget https://github.com/allure-framework/allure2/releases/download/2.32.0/allure-2.32.0.zip
+          unzip allure-2.32.0.zip
+          export PATH=$PATH:$(pwd)/allure-2.32.0/bin
+          allure --version
+
+      - name: Run Selenium tests with pytest (Headless mode)
+        run: |
+          xvfb-run -a --server-args="-screen 0 1024x768x24" pytest testScripts/test_T16VCBCSingleSchedule.py --alluredir=Reports
+        continue-on-error: true  # Allow the pipeline to continue even if tests fail
+
+      - name: Generate Allure Report
+        run: |
+          export PATH=$PATH:$(pwd)/allure-2.32.0/bin
+          mkdir allure-report
+          
+          allure generate Reports -o allure-report --clean
+
+      - name: Upload Allure Report as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Allure Report
+          path: allure-report
+
+      - name: Deploy Allure Report to GitHub Pages
+        if: ${{ github.event_name == 'push' }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          
+          publish_dir: ./allure-report
+          publish_branch: gh-pages
+          force_orphan: true
+          
