@@ -57,7 +57,7 @@ jobs:
 
       - name: Run Selenium tests with pytest (Headless mode)
         run: |
-          xvfb-run -a --server-args="-screen 0 1024x768x24" pytest testScripts/test_T02Scheduling.py --alluredir=Reports
+          xvfb-run -a --server-args="-screen 0 1024x768x24" pytest testScripts/test_T16VCBCSingleSchedule.py --alluredir=Reports
         continue-on-error: true  # Allow the pipeline to continue even if tests fail
 
       - name: Generate Allure Report
