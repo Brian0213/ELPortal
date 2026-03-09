@@ -65,6 +65,7 @@
 import os
 import platform
 import subprocess
+import tempfile
 import webbrowser
 from pathlib import Path
 
@@ -81,6 +82,7 @@ from selenium.webdriver.chrome.options import Options
 
 
 options = Options()
+options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
 @pytest.fixture()
 def setup(browser):
@@ -92,10 +94,14 @@ def setup(browser):
     options.add_argument("--disable-notifications")
     options.add_argument("--disable-popup-blocking")
     options.add_argument("--disable-gpu")
-    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-sandbox")
     #options.add_argument("headless")
     options.add_argument("--disable-dev-shm-usage")
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
+
+    # THIS IS THE KEY LINE
+    user_data_dir = tempfile.mkdtemp()
+    options.add_argument(f"--user-data-dir={user_data_dir}")
 
     global elportal
     if browser == 'chrome':

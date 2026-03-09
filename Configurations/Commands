@@ -1,0 +1,24 @@
+# Fix to fix chrome crash on macOS
+
+Step 1: Remove ALL cached drivers (again, clean slate):
+rm -rf ~/.wdm
+
+Step 2: Reinstall ChromeDriver cleanly
+Run any Selenium test once or run:
+python - <<EOF
+from webdriver_manager.chrome import ChromeDriverManager
+ChromeDriverManager().install()
+EOF
+
+Step 3: REMOVE macOS quarantine (MOST IMPORTANT):
+xattr -dr com.apple.quarantine ~/.wdm
+
+Step 4: Allow execution explicitly:
+chmod +x ~/.wdm/drivers/chromedriver/mac64/*/chromedriver-mac-arm64/chromedriver
+
+Step 5: Validate (must NOT say “killed”):
+~/.wdm/drivers/chromedriver/mac64/*/chromedriver-mac-arm64/chromedriver --version
+Expected output:
+similar to "ChromeDriver 143.0.xxxxx"
+
+Step6: Resume testing.

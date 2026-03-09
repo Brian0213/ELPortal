@@ -1,0 +1,19 @@
+[32mINFO    [0m WDM:logger.py:11 ====== WebDriver manager ======
+[32mINFO    [0m WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+[32mINFO    [0m WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+[32mINFO    [0m WDM:logger.py:11 Driver [/Users/oluwasegunojeyinka/.wdm/drivers/chromedriver/mac64/145.0.7632.117/chromedriver-mac-arm64/chromedriver] found in cache
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:25 ******** Verifying Login Test ********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:26 ******** Call the Browse Configuration ********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:28 ******** Launch the Application URL ********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:30 ******** Define the LoginPage Driver ********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:33 ******** Click the Home Button ********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:35 ******** Enter the Username ********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:37 ******** Enter the Password ********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:39 ******** Click the Sign in Button********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:41 ******** Click the Learner's My VCBC Menu********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:43 ******** Click the VCBC pick********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:45 ******** Click the VCBC Date Field********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:47 ******** Learner Selects Preferred Date********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:49 ******** Learner Clicks the Schedule Button********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:51 ******** Close the Browser********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:54 **********Learner VCBC Schedule Test is Successful********

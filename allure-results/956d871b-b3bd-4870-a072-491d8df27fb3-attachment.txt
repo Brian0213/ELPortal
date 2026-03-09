@@ -1,0 +1,20 @@
+[32mINFO    [0m WDM:logger.py:11 ====== WebDriver manager ======
+[32mINFO    [0m WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+[32mINFO    [0m WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+[32mINFO    [0m WDM:logger.py:11 There is no [mac64] chromedriver "145.0.7632.117" for browser google-chrome "145.0.7632" in cache
+[32mINFO    [0m WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+[32mINFO    [0m WDM:logger.py:11 WebDriver version 145.0.7632.117 selected
+[32mINFO    [0m WDM:logger.py:11 Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/145.0.7632.117/mac-arm64/chromedriver-mac-arm64.zip
+[32mINFO    [0m WDM:logger.py:11 About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/145.0.7632.117/mac-arm64/chromedriver-mac-arm64.zip
+[32mINFO    [0m WDM:logger.py:11 Driver downloading response is 200
+[32mINFO    [0m WDM:logger.py:11 Get LATEST chromedriver version for google-chrome
+[32mINFO    [0m WDM:logger.py:11 Driver has been saved in cache [/Users/oluwasegunojeyinka/.wdm/drivers/chromedriver/mac64/145.0.7632.117]
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:25 ******** Verifying Login Test ********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:26 ******** Call the Browse Configuration ********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:28 ******** Launch the Application URL ********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:30 ******** Define the LoginPage Driver ********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:33 ******** Click the Home Button ********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:35 ******** Enter the Username ********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:37 ******** Enter the Password ********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:39 ******** Click the Sign in Button********
+[32mINFO    [0m root:test_T16VCBCMultipleSchedule.py:41 ******** Click the Learner's My VCBC Menu********

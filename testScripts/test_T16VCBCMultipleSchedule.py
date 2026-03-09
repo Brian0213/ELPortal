@@ -7,19 +7,20 @@ from Pages.DFCPage import DfcPage
 from Pages.VCBCPage import VCBCPage
 from Pages.LoginPage import LoginPage
 from testScripts.base_test import BaseTest
+from testData.vcbc_learners import VCBC_STUDENTS
 from utility.readProperties import ReadConfig
 from utility.customLogger import LogGen
 
 class Test_VCBC_Learner_Schedule:
 
     baseURL = ReadConfig.getApplicationURL()
-    usernameL = ReadConfig.getUseremailL()
-    passwordL = ReadConfig.getPasswordL()
+    # usernameL = ReadConfig.getUseremailL()
+    # passwordL = ReadConfig.getPasswordL()
 
     logger = LogGen.loggen()
 
-    @pytest.mark.order(1)
-    def test_login(self, setup):
+    @pytest.mark.parametrize("learner", VCBC_STUDENTS)
+    def test_login(self, setup, learner):
         self.elportal = setup
         self.logger.info("******** Verifying Login Test ********")
         self.logger.info("******** Call the Browse Configuration ********")
@@ -32,9 +33,9 @@ class Test_VCBC_Learner_Schedule:
         self.logger.info("******** Click the Home Button ********")
         self.elp.clickHomeButton()
         self.logger.info("******** Enter the Username ********")
-        self.elp.emailAddress(self.usernameL)
+        self.elp.emailAddress(learner["email"])
         self.logger.info("******** Enter the Password ********")
-        self.elp.setPassword(self.passwordL)
+        self.elp.setPassword(learner["password"])
         self.logger.info("******** Click the Sign in Button********")
         self.elp.clickSignin()
         self.logger.info("******** Click the Learner's My VCBC Menu********")
@@ -48,6 +49,7 @@ class Test_VCBC_Learner_Schedule:
         self.logger.info("******** Learner Clicks the Schedule Button********")
         self.vcb.learnerSlotSchedule()
         self.logger.info("******** Close the Browser********")
+        self.elportal.delete_all_cookies()
         self.elportal.quit()
         self.logger.info("**********Learner VCBC Schedule Test is Successful********")
 

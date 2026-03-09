@@ -1,3 +1,5 @@
+import pytest
+from selenium.common import StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
@@ -8,15 +10,56 @@ class VCBCPage:
     MONTH_DROPDOWN = (By.CSS_SELECTOR, "select.flatpickr-monthDropdown-months")
     YEAR_INPUT = (By.CSS_SELECTOR, "input.numInput.cur-year")
     MONTH_OPTIONS = (By.CSS_SELECTOR, "option.flatpickr-monthDropdown-month")
+    SLOT_DROPDOWN = (By.ID, "slot")
+    SLOT_OPTIONS = (By.XPATH, "//select[@id='slot']/option")
 
     # Alternative locators
     MONTH_DROPDOWN_XPATH = (By.XPATH, "//select[@aria-label='Month']")
 
     def __init__(self, elportal):
         self.elportal = elportal
+        self.wait = WebDriverWait(elportal, 5)
 
     def clickVCBCMgt(self):
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[normalize-space()='VCBC Management']"))).click()
+
+    def clickVCBCMgtL(self):
+        WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[normalize-space()='My VCBC']"))).click()
+
+    def clickMyVCBC(self):
+        WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@hx-get='/vcbc/28/schedule']"))).click()
+
+    def clickRoleAlert(self):
+        WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//*[@role='alert']")))
+
+    def btnSchedule(self):
+        WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='ts-control']"))).click()
+
+    def pickSlot(self):
+        WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@id,'slot-opt') and not(contains(@class,'is-disabled'))]"))).click()
+
+    def confirmSlot(self):
+        WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@form='frmSchedule']"))).click()
+
+    def open_slot_dropdown(self):
+        self.wait.until(EC.element_to_be_clickable(self.SLOT_DROPDOWN)).click()
+
+    def get_all_slots(self):
+        return self.wait.until(
+            EC.presence_of_all_elements_located(self.SLOT_OPTIONS)
+        )
+
+    def select_slot_by_index(self, index):
+        slots = self.get_all_slots()
+        slots[index].click()
+
+    def select_slot_by_visible_text(self, text):
+        slots = self.get_all_slots()
+        for slot in slots:
+            if slot.text.strip() == text:
+                slot.click()
+                return
+        raise Exception(f"Time slot '{text}' not found")
 
     def createVCBC(self):
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[normalize-space()='Create VCBC']"))).click()
@@ -346,7 +389,7 @@ class VCBCPage:
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//body[1]/div[2]/div[1]/div[2]/div[2]/div[1]/ul[1]/li[3]/a[1]/div[1]/div[1]"))).click()
 
     def learnerSchedule(self):
-        WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@hx-get='/vcbc/40/schedule?old_slot=3675']"))).click()
+        WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@hx-get='/vcbc/30/schedule']"))).click()
 
     def learnerReSchedule(self):
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@hx-get='/vcbc/40/schedule?old_slot=3675']"))).click()
@@ -421,7 +464,67 @@ class VCBCPage:
     def pickDecember(self):
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[@class='flatpickr-calendar hasTime animate open arrowBottom arrowLeft']//option[@value='4'][normalize-space()='December']"))).click()
 
-    def test_select_date(self, driver):
-        # Use the locator
-        month_element = driver.find_element(*DatePickerLocators.MONTH_DROPDOWN)
-        Select(month_element).select_by_visible_text("March")
+    def open_schedule_modal(self, vcbc_id="27"):
+        self.wait.until(
+            EC.element_to_be_clickable(
+                (By.XPATH, f"//button[@hx-get='/vcbc/{vcbc_id}/schedule']")
+            )
+        ).click()
+
+    # def test_select_date(self, driver):
+    #     # Use the locator
+    #     month_element = driver.find_element(*DatePickerLocators.MONTH_DROPDOWN)
+    #     Select(month_element).select_by_visible_text("March")
+
+    def select_slot_with_retry(self, slot_id, retries=3):
+        for _ in range(retries):
+            try:
+                self.wait.until(EC.element_to_be_clickable(self.SLOT_CONTROL)).click()
+                self.wait.until(EC.element_to_be_clickable((By.ID, slot_id))).click()
+                return
+            except StaleElementReferenceException:
+                continue
+        raise
+
+    def select_slot(self, slot_id):
+        """
+        Selects a VCBC slot in a stale-safe way
+        """
+
+        # Always re-open dropdown (DOM refreshes after each schedule)
+        self.wait.until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//div[contains(@class,'ts-control')]")
+            )
+        ).click()
+
+        # Select slot
+        self.wait.until(
+            EC.element_to_be_clickable(
+                (By.ID, slot_id)
+            )
+        ).click()
+
+    def submit_schedule(self):
+        self.wait.until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//button[@form='frmSchedule']")
+            )
+        ).click()
+
+    def close_schedule_modal(self):
+        self.wait.until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//span[normalize-space()='Cancel']")
+            )
+        ).click()
+
+
+    def select_slot(self, slot_number: int = 1):
+        """Select a slot by number (default is 1)"""
+        available_slots = self.wait.until(EC.presence_of_all_elements_located(
+            (By.XPATH, "//div[contains(@id,'slot-opt') and not(contains(@class,'is-disabled'))]")
+        ))
+        if len(available_slots) < slot_number:
+            pytest.fail(f"Requested slot {slot_number} not available. Only {len(available_slots)} slots found.")
+        available_slots[slot_number - 1].click()

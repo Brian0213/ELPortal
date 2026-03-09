@@ -13,6 +13,15 @@ class LoginPage:
     def setPassword(self, setpassword):
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='password']"))).send_keys(setpassword)
 
+
+    def emailAddressL(self, emailaddressL):
+        WebDriverWait(self.elportal, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//input[@name='username']"))).send_keys(emailaddressL)
+
+    def setPasswordL(self, setpasswordL):
+        WebDriverWait(self.elportal, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//input[@name='password']"))).send_keys(setpasswordL)
+
     def clickSignin(self):
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']"))).click()
 
@@ -63,3 +72,15 @@ class LoginPage:
 
     def Impersonate(self):
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@form='frmImpersonate']"))).click()
+
+    def login(self, username, password):
+        # Fill email/username
+        self.elportal.until(EC.visibility_of_element_located((By.ID, "email"))).send_keys(username)
+        # Fill password
+        self.elportal.until(EC.visibility_of_element_located((By.ID, "password"))).send_keys(password)
+        # Click login
+        self.elportal.until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']"))).click()
+
+    def logout(self):
+        # Optional: logout logic for learners
+        self.elportal.until(EC.element_to_be_clickable((By.ID, "logoutButton"))).click()
