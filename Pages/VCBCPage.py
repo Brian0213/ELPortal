@@ -528,3 +528,4 @@ class VCBCPage:
         if len(available_slots) < slot_number:
             pytest.fail(f"Requested slot {slot_number} not available. Only {len(available_slots)} slots found.")
         available_slots[slot_number - 1].click()
+        
