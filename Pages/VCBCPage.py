@@ -386,7 +386,24 @@ class VCBCPage:
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="frmVCBCEditor"]/div[6]/div[3]/input[2]'))).click()
 
     def btnLearnerVCBC(self):
-        WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[normalize-space()='My VCBC']"))).click()
+        try:
+        # Wait for page to fully load after login
+        WebDriverWait(self.elportal, 20).until(
+            lambda d: d.execute_script("return document.readyState") == "complete"
+        )
+        WebDriverWait(self.elportal, 20).until(
+            EC.element_to_be_clickable((By.XPATH, "//span[normalize-space()='My VCBC']"))
+        ).click()
+    except TimeoutException:
+        print(f"\n[DEBUG] URL after login: {self.elportal.current_url}")
+        print(f"[DEBUG] Page title: {self.elportal.title}")
+        # Dump all visible span and a tag texts to find the real element
+        spans = self.elportal.find_elements(By.TAG_NAME, "span")
+        print(f"[DEBUG] All spans: {[s.text.strip() for s in spans if s.text.strip()]}")
+        links = self.elportal.find_elements(By.TAG_NAME, "a")
+        print(f"[DEBUG] All links: {[l.text.strip() for l in links if l.text.strip()]}")
+        raise
+        # WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[normalize-space()='My VCBC']"))).click()
 
     def learnerSchedule(self):
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@hx-get='/vcbc/31/schedule']"))).click()
