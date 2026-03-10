@@ -386,7 +386,7 @@ class VCBCPage:
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="frmVCBCEditor"]/div[6]/div[3]/input[2]'))).click()
 
     def btnLearnerVCBC(self):
-        WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//*[contains(text(),'My VCBC') or contains(text(),'VCBC')]"))).click()
+        WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[normalize-space()='My VCBC']"))).click()
 
     def learnerSchedule(self):
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@hx-get='/vcbc/31/schedule']"))).click()
