@@ -24,6 +24,11 @@ class LoginPage:
 
     def clickSignin(self):
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']"))).click()
+        # Wait for login to complete - URL should change away from login page
+        WebDriverWait(self.elportal, 20).until(
+        lambda d: "login" not in d.current_url.lower() and 
+                  "signin" not in d.current_url.lower()
+    )
 
     def clickHomeButton(self):
         WebDriverWait(self.elportal, 10).until(EC.element_to_be_clickable((By.XPATH, "//a[normalize-space()='Click Here to Continue']"))).click()
